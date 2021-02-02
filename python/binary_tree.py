@@ -77,3 +77,16 @@ class BT:
                 else:
                     return Node(norl[i])
             self.root = recur(0)
+
+        self.depth = self.__depth__(self.root)
+
+        @staticmethod
+        def __depth__(root):
+            def recur(n):
+                if n.left is None:
+                    return 1
+                if n.right is None:
+                    return 1
+                return max(1 + recur(n.left), 1 + recur(n.right))
+
+            return max(1 + recur(root.left), 1 + recur(root.right))
