@@ -2,12 +2,6 @@ from typing import TypeVar, Generic
 
 Node = TypeVar('Node')
 
-
-class BT(Generic[Node]):
-    def __init__(self, n: Node) -> None:
-        self.root = n
-
-
 class Node(Generic[Node]):
     def __init__(self, v: float, l: Node = None, r: Node = None) -> None:
         """
@@ -18,14 +12,28 @@ class Node(Generic[Node]):
         :param r: right child node if present
         """
         self.value = v
+        self._left = l
+        self._right = r
 
+    @property
+    def left(self):
+        return self._left
+
+    @left.setter
+    def left(self, l):
         if hasattr(l, 'value') or l is None:
-            self.left = l
+            self._left = l
         else:
             raise TypeError('Left child accepts only a "Node" type object')
 
-        if hasattr(r, 'value') or l is None:
-            self.right = r
+    @property
+    def right(self):
+        return self._right
+
+    @right.setter
+    def right(self, r):
+        if hasattr(r, 'value') or r is None:
+            self._right = r
         else:
             raise TypeError('Right child accepts only a "Node" type object')
 
@@ -39,6 +47,17 @@ class Node(Generic[Node]):
 
         :return: ASCII representation of the node and it's childs
         """
-        return f'  {self.value}  \n' \
-               f' / \\ \n' \
-               f'{self.left.value}   {self.right.value}'
+        if self.left and self.right:
+            return f'  {self.value}  \n' \
+                   f' / \\ \n' \
+                   f'{self.left.value}   {self.right.value}'
+        elif self.right is None and self.left is not None:
+            return f'  {self.value}  \n' \
+                   f' /   \n' \
+                   f'{self.left.value}    '
+        else:
+            return f'  {self.value}  '
+
+class BT(Generic[Node]):
+    def __init__(self, n: Node) -> None:
+        self.root = n
