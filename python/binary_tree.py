@@ -42,9 +42,9 @@ class Node(Generic[Node]):
         """
         Prints the node value and it's childs values in ASCII style
 
-        ##a##
-        #/ \#
-        b###c
+        ##a##    ##a##    ##a##
+        #/ \# or #/    or
+        b###c    b
 
         :return: ASCII representation of the node and it's childs
         """
@@ -79,14 +79,41 @@ class BT:
             self.root = recur(0)
 
         self.depth = self.__depth__(self.root)
+        self.nodes, self.leafs = self.__countnl__(self.root, self.depth)
 
-        @staticmethod
-        def __depth__(root):
-            def recur(n):
-                if n.left is None:
-                    return 1
-                if n.right is None:
-                    return 1
-                return max(1 + recur(n.left), 1 + recur(n.right))
+    @staticmethod
+    def __depth__(root):
+        """
+        Calculates the maximum depth/height of the tree
+        :param root: root node of the tree
+        :return: maximum depth/height of the tree
+        """
+        def recur(n):
+            if n.left is None:
+                return 1
+            if n.right is None:
+                return 1
+            return max(1 + recur(n.left), 1 + recur(n.right))
 
-            return max(1 + recur(root.left), 1 + recur(root.right))
+        return max(1 + recur(root.left), 1 + recur(root.right)) - 1
+
+    @staticmethod
+    def __countnl__(root, depth):
+        """
+        Counts the number of nodes and leafs in the tree
+        :param root: root node of the tree
+        :return: count of nodes and count of leafs
+        """
+        elements = [root]
+        n,l = 0, 0
+        while depth > 0:
+            for e in elements:
+                if e.left or e.right:
+                    n += 1
+                else:
+                    l += 1
+            elements = [e.left for e in elements if e.left is not None] + [e.right for e in elements if e.right is not None]
+            depth -= 1
+        # the elements in last level are indefinitely leafs, so no checking needed
+        l += len(elements)
+        return n, l
