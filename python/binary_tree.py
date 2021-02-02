@@ -117,10 +117,3 @@ class BT:
         # the elements in last level are indefinitely leafs, so no checking needed
         l += len(elements)
         return n, l
-
-if __name__ == '__main__':
-    x = BT([1,2,3,4,5,6,7,8,9,10])
-    print('Depth is: ', x.depth)
-    print(f'No. of nodes are: {x.nodes}\nNo. of leafs are: {x.leafs}')
-    # print(repr(x))
-    # print(x.root)
