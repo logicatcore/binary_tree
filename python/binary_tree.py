@@ -3,6 +3,7 @@ from typing import TypeVar, Generic
 Node = TypeVar('Node')
 
 class Node(Generic[Node]):
+
     def __init__(self, v: float, l: Node = None, r: Node = None) -> None:
         """
         Initialises a node with a value and assigns it left and/or right childs
@@ -58,6 +59,21 @@ class Node(Generic[Node]):
         else:
             return f'  {self.value}  '
 
-class BT(Generic[Node]):
-    def __init__(self, n: Node) -> None:
-        self.root = n
+class BT:
+
+    def __init__(self, norl) -> None:
+        """
+        The init initialiser accepts either a single root node or a list to create a binary tree from the list
+        :param norl: An object of type Node or type python list
+        """
+        if isinstance(norl, Node):
+            self.root = norl
+        elif isinstance(norl, list):
+            def recur(i):
+                if 2*i+2 < len(norl):
+                    return Node(norl[i], recur(2*i+1), recur(2*i+2))
+                elif 2*i+1 < len(norl):
+                    return Node(norl[i], recur(2*i+1))
+                else:
+                    return Node(norl[i])
+            self.root = recur(0)
