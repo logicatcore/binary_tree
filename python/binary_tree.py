@@ -117,3 +117,53 @@ class BT:
         # the elements in last level are indefinitely leafs, so no checking needed
         l += len(elements)
         return n, l
+
+    def graphviz(self):
+        try:
+            import graphviz as G
+
+            dot = G.Digraph(comment='Binary Tree',
+                            graph_attr={'nodesep': '0.04', 'ranksep': '0.05', 'bgcolor': 'white', 'splines': 'line',
+                                        'rankdir': 'TB', 'fontname': 'Hilda 10', 'color':'transparent'},
+                            node_attr={'fixedsize': 'true', 'shape': 'circle', 'penwidth': '1', 'width': '0.4',
+                                       'height': '0.4', 'fontcolor':'black'},
+                            edge_attr={'color': 'black', 'arrowsize': '.4'})
+            mapping = []
+            depth = self.depth
+            while depth >= 0:
+                with dot.subgraph(name='cluster_' + str(depth)) as c:
+                    #c.attr(color='transparent', rankdir='LR')
+                    if depth == self.depth:
+                        c.node(str(depth) + str(0), str(self.root.value))
+
+                        if self.root.left and self.root.right:
+                            mapping += [{str(depth)+str(0): [self.root.left, self.root.right]}]
+                        elif self.root.right is None:
+                            mapping += [{str(depth)+str(0): [self.root.left]}]
+                        elif self.root.right is None:
+                            mapping += [{str(depth)+str(0): [self.root.right]}]
+                    else:
+                        tmp = []
+                        i = 0
+                        # list of dicts
+                        for subtree in mapping:
+                            # dict with list as value
+                            for key, value in subtree.items():
+                                # value list contains the childs of a node, here key
+                                for e in reversed(value):
+                                    c.node(str(depth)+str(i), str(e.value))
+                                    dot.edge(key, str(depth)+str(i))
+
+                                    if e.left or e.right:
+                                        if e.left and e.right:
+                                            tmp += [{str(depth)+str(i): [e.left, e.right]}]
+                                        elif e.right is None:
+                                            tmp += [{str(depth) + str(i): [e.left]}]
+                                        elif e.left is None:
+                                            tmp += [{str(depth) + str(i): [e.right]}]
+                                    i += 1
+                        mapping = tmp
+                depth -= 1
+            return dot
+        except ImportError as e:
+            print('ModuleNotFoundError: "graphviz" package not available')
