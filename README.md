@@ -1,3 +1,5 @@
+![python-testing](https://github.com/logicatcore/binary_tree/workflows/Binary-Tree-Python-Testing/badge.svg)
+
 # binary_tree
 This repository is for creating a comprhensive binary tree data structure and various algorithms related to it
 
