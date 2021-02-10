@@ -36,4 +36,4 @@ jobs:
         if: always()
         with:
           files: test-results/**/.xml
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
