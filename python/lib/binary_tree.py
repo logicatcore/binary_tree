@@ -13,8 +13,8 @@ class Node(Generic[Node]):
         :param r: right child node if present
         """
         self.value = v
-        self._left = l
-        self._right = r
+        self.left = l
+        self.right = r
 
     @property
     def left(self):
@@ -66,8 +66,18 @@ class BT:
         The init initialiser accepts either a single root node or a list to create a binary tree from the list
         :param norl: An object of type Node or type python list
         """
+        self.root = norl
+        self.depth = self.__depth__(self.root)
+        self.nodes, self.leafs = self.__countnl__(self.root, self.depth)
+
+    @property
+    def root(self):
+        return self._root
+
+    @root.setter
+    def root(self, norl):
         if isinstance(norl, Node):
-            self.root = norl
+            self._root = norl
         elif isinstance(norl, list):
             def recur(i):
                 if 2*i+2 < len(norl):
@@ -76,10 +86,7 @@ class BT:
                     return Node(norl[i], recur(2*i+1))
                 else:
                     return Node(norl[i])
-            self.root = recur(0)
-
-        self.depth = self.__depth__(self.root)
-        self.nodes, self.leafs = self.__countnl__(self.root, self.depth)
+            self._root = recur(0)
 
     @staticmethod
     def __depth__(root):
