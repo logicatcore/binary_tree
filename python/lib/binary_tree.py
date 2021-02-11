@@ -1,4 +1,5 @@
 from typing import TypeVar, Generic
+from lib import heapify
 
 Node = TypeVar('Node')
 
@@ -190,3 +191,19 @@ class BT:
             return dot
         except ImportError as e:
             print('ModuleNotFoundError: "graphviz" package not available')
+
+    def max_heapify(self):
+        """
+        This is wrap to the general max_heapify algorithm
+        :return: None
+        """
+        self.elements = heapify.max_heapify(self.elements)
+        self.root = self.elements
+
+    def min_heapify(self):
+        """
+        This is wrap to the general min_heapify algorithm
+        :return: None
+        """
+        self.elements = heapify.min_heapify(self.elements)
+        self.root = self.elements
