@@ -78,7 +78,9 @@ class BT:
     def root(self, norl):
         if isinstance(norl, Node):
             self._root = norl
+            self.elements = self.to_list()
         elif isinstance(norl, list):
+            self.elements = norl
             def recur(i):
                 if 2*i+2 < len(norl):
                     return Node(norl[i], recur(2*i+1), recur(2*i+2))
@@ -87,6 +89,20 @@ class BT:
                 else:
                     return Node(norl[i])
             self._root = recur(0)
+
+    def to_list(self):
+        elements = [self.root]
+        values = [self.root.value]
+        n, l = 0, 0
+        while len(elements) > 0:
+            for e in elements:
+                if e.left or e.right:
+                    n += 1
+                else:
+                    l += 1
+            elements = [e.left for e in elements if e.left is not None] + [e.right for e in elements if e.right is not None]
+            values += [x.value for x in elements]
+        return values
 
     @staticmethod
     def __depth__(root):
@@ -112,7 +128,7 @@ class BT:
         :return: count of nodes and count of leafs
         """
         elements = [root]
-        n,l = 0, 0
+        n, l = 0, 0
         while depth > 0:
             for e in elements:
                 if e.left or e.right:
