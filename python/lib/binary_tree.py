@@ -197,13 +197,11 @@ class BT:
         This is wrap to the general max_heapify algorithm
         :return: None
         """
-        self.elements = heapify.max_heapify(self.elements)
-        self.root = self.elements
+        self.root = heapify.max_heapify(self.elements)
 
     def min_heapify(self):
         """
         This is wrap to the general min_heapify algorithm
         :return: None
         """
-        self.elements = heapify.min_heapify(self.elements)
-        self.root = self.elements
+        self.root = heapify.min_heapify(self.elements)
