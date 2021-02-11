@@ -47,9 +47,3 @@ def min_heapify(A):
     for index in reversed(range(len(A))):
         recurse(A, index)
     return A
-
-if __name__ == '__main__':
-    # A = max_heapify([16,4,10,14,7,9,3,2,8,1])
-    # A = max_heapify(list(range(1,11)))
-    A = min_heapify(list(reversed(range(1, 11))))
-    print(A)
