@@ -1,6 +1,11 @@
 import math
 
 def max_heapify(A):
+    """
+    This method is used to maintain max-heap property in the binary tree data structure
+    :param A: Elements of the binary tree as a list
+    :return: Array satisfying the max-heap property
+    """
     left = lambda x: (x << 1) + 1
     right = lambda x: (x << 1) + 2
     parent = lambda x: math.floor(math.log2(x))
@@ -20,6 +25,11 @@ def max_heapify(A):
     return A
 
 def min_heapify(A):
+    """
+    This method is used to maintain min-heap property in the binary tree data structure
+    :param A: Elements of the binary tree as a list
+    :return: Array satisfying the min-heap property
+    """
     left = lambda x: (x << 1) + 1
     right = lambda x: (x << 1) + 2
     parent = lambda x: math.floor(math.log2(x))
