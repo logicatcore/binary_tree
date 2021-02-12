@@ -289,14 +289,18 @@ class BT:
                     if k == 0:
                         if e is not None:
                             if e.left and e.right:
-                                tmp = textwrap.indent(split_tree_lr(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
+                                tmp = textwrap.indent(split_tree_lr(inbtw_len),
+                                                      " " * (prefix_suffix_len - inbtw_len // 2))
                             elif e.left and e.right is None:
-                                tmp = textwrap.indent(split_tree_l(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
+                                tmp = textwrap.indent(split_tree_l(inbtw_len),
+                                                      " " * (prefix_suffix_len - inbtw_len // 2))
                             elif e.left is None and e.right:
-                                tmp = textwrap.indent(split_tree_r(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
+                                tmp = textwrap.indent(split_tree_r(inbtw_len),
+                                                      " " * (prefix_suffix_len - inbtw_len // 2))
                         else:
-                            tmp = " " * (inbtw_len//2 + prefix_suffix_len) + "\n" + " " * (inbtw_len//2 + prefix_suffix_len) \
-                                  + "\n" + " " * (inbtw_len//2 + prefix_suffix_len) + "\n"
+                            tmp = " " * (inbtw_len // 2 + prefix_suffix_len) + "\n" + " " * (
+                                        inbtw_len // 2 + prefix_suffix_len) \
+                                  + "\n" + " " * (inbtw_len // 2 + prefix_suffix_len) + "\n"
                     else:
                         if e is not None:
                             if e.left and e.right:
@@ -306,7 +310,8 @@ class BT:
                             elif e.left is None and e.right:
                                 tmp = join_ml(tmp, textwrap.indent(split_tree_r(inbtw_len), " " * inbtw_len))
                             else:
-                                tmp = join_ml(tmp, " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n")
+                                tmp = join_ml(tmp,
+                                              " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n")
                         else:
                             tmp = join_ml(tmp,
                                           " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n")
