@@ -44,7 +44,7 @@ class TestBinaryTreeAttributes:
         :return: None
         """
         x = BT(Node(1, Node(2, Node(4), Node(5)), Node(3, Node(6), Node(7))))
-        assert [1, 2, 3, 4, 6, 5, 7] == x.elements, "The elements of the binary tree do not match"
+        assert [1, 2, 3, 4, 5, 6, 7] == x.elements, "The elements of the binary tree do not match"
 
         x = BT(list(range(10)))
         assert list(range(10)) == x.elements, "The elements of the binary tree do not match"
