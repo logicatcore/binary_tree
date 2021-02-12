@@ -3,6 +3,7 @@ from lib import heapify
 
 Node = TypeVar('Node')
 
+
 class Node(Generic[Node]):
 
     def __init__(self, v: float, l: Node = None, r: Node = None) -> None:
@@ -60,6 +61,7 @@ class Node(Generic[Node]):
         else:
             return f'  {self.value}  '
 
+
 class BT:
 
     def __init__(self, norl) -> None:
@@ -82,13 +84,15 @@ class BT:
             self.elements = self.to_list()
         elif isinstance(norl, list):
             self.elements = norl
+
             def recur(i):
-                if 2*i+2 < len(norl):
-                    return Node(norl[i], recur(2*i+1), recur(2*i+2))
-                elif 2*i+1 < len(norl):
-                    return Node(norl[i], recur(2*i+1))
+                if 2 * i + 2 < len(norl):
+                    return Node(norl[i], recur(2 * i + 1), recur(2 * i + 2))
+                elif 2 * i + 1 < len(norl):
+                    return Node(norl[i], recur(2 * i + 1))
                 else:
                     return Node(norl[i])
+
             self._root = recur(0)
 
     def to_list(self):
@@ -99,7 +103,7 @@ class BT:
             tmp = []
             for e in elements:
                 if e.left and e.right:
-                    tmp += [e.left , e.right]
+                    tmp += [e.left, e.right]
                 elif e.left is None and e.right:
                     tmp += [e.right]
                 elif e.right is None and e.left:
@@ -115,6 +119,7 @@ class BT:
         :param root: root node of the tree
         :return: maximum depth/height of the tree
         """
+
         def recur(n):
             if n is None:
                 return 1
@@ -137,7 +142,8 @@ class BT:
                     n += 1
                 else:
                     l += 1
-            elements = [e.left for e in elements if e.left is not None] + [e.right for e in elements if e.right is not None]
+            elements = [e.left for e in elements if e.left is not None] + [e.right for e in elements if
+                                                                           e.right is not None]
             depth -= 1
         # the elements in last level are indefinitely leafs, so no checking needed
         l += len(elements)
@@ -149,24 +155,24 @@ class BT:
 
             dot = G.Digraph(comment='Binary Tree',
                             graph_attr={'nodesep': '0.04', 'ranksep': '0.05', 'bgcolor': 'white', 'splines': 'line',
-                                        'rankdir': 'TB', 'fontname': 'Hilda 10', 'color':'transparent'},
+                                        'rankdir': 'TB', 'fontname': 'Hilda 10', 'color': 'transparent'},
                             node_attr={'fixedsize': 'true', 'shape': 'circle', 'penwidth': '1', 'width': '0.4',
-                                       'height': '0.4', 'fontcolor':'black'},
+                                       'height': '0.4', 'fontcolor': 'black'},
                             edge_attr={'color': 'black', 'arrowsize': '.4'})
             mapping = []
             depth = self.depth
             while depth >= 0:
                 with dot.subgraph(name='cluster_' + str(depth)) as c:
-                    #c.attr(color='transparent', rankdir='LR')
+                    # c.attr(color='transparent', rankdir='LR')
                     if depth == self.depth:
                         c.node(str(depth) + str(0), str(self.root.value))
 
                         if self.root.left and self.root.right:
-                            mapping += [{str(depth)+str(0): [self.root.left, self.root.right]}]
+                            mapping += [{str(depth) + str(0): [self.root.left, self.root.right]}]
                         elif self.root.right is None:
-                            mapping += [{str(depth)+str(0): [self.root.left]}]
+                            mapping += [{str(depth) + str(0): [self.root.left]}]
                         elif self.root.right is None:
-                            mapping += [{str(depth)+str(0): [self.root.right]}]
+                            mapping += [{str(depth) + str(0): [self.root.right]}]
                     else:
                         tmp = []
                         i = 0
@@ -176,12 +182,12 @@ class BT:
                             for key, value in subtree.items():
                                 # value list contains the childs of a node, here key
                                 for e in reversed(value):
-                                    c.node(str(depth)+str(i), str(e.value))
-                                    dot.edge(key, str(depth)+str(i))
+                                    c.node(str(depth) + str(i), str(e.value))
+                                    dot.edge(key, str(depth) + str(i))
 
                                     if e.left or e.right:
                                         if e.left and e.right:
-                                            tmp += [{str(depth)+str(i): [e.left, e.right]}]
+                                            tmp += [{str(depth) + str(i): [e.left, e.right]}]
                                         elif e.right is None:
                                             tmp += [{str(depth) + str(i): [e.left]}]
                                         elif e.left is None:
@@ -209,7 +215,7 @@ class BT:
 
     def ASCII(self):
         """
-        This method returns a ASCII representation of the binary tree
+        This method prints a ASCII representation of the binary tree
         :return: None
         """
         import textwrap
@@ -219,11 +225,13 @@ class BT:
                 return "_" * (width // 2) + "|" + "_" * (width // 2) + "\n" + "|" + " " * (width - 2) + "|"
             else:
                 return "_" * (width // 2) + "|" + "_" * (width // 2 - 1) + "\n" + "|" + " " * (width - 2) + "|"
+
         def split_tree_r(width):
             if width % 2:
                 return " " * (width // 2) + "|" + "_" * (width // 2) + "\n" + " " * (width - 1) + "|"
             else:
                 return " " * (width // 2) + "|" + "_" * (width // 2 - 1) + "\n" + " " * (width - 1) + "|"
+
         def split_tree_l(width):
             if width % 2:
                 return "_" * (width // 2) + "|" + " " * (width // 2) + "\n" + "|" + " " * (width - 1)
@@ -231,6 +239,9 @@ class BT:
                 return "_" * (width // 2) + "|" + " " * (width // 2 - 1) + "\n" + "|" + " " * (width - 1)
 
         def join_ml(s1, s2):
+            """
+            Joins a multiline string
+            """
             joined = ''
             for l, r in zip(s1.splitlines(), s2.splitlines()):
                 joined += l + r + "\n"
@@ -241,6 +252,7 @@ class BT:
 
         elements = [[self.root]]
         depth = self.depth
+        # Nested list of elements level wise
         while depth > 0:
             tmp = []
             for e in elements[-1]:
@@ -255,36 +267,39 @@ class BT:
 
         output = ''
         for i, level_elements in enumerate(elements):
-            prefix_suffix_len = max(int(2 ** (self.depth - i  - 1)) * WIDTH, MARGIN)
+            prefix_suffix_len = max(int(2 ** (self.depth - i - 1)) * WIDTH, MARGIN)
 
-            tmp = ' '* prefix_suffix_len
+            # string with elements values are prepared
+            tmp = ' ' * prefix_suffix_len
             for j, e in enumerate(level_elements):
                 if j == 0:
                     tmp += str(e.value)
                 else:
-                    tmp += " "*(inbtw_len - len(str(e.value))) + str(e.value)
+                    tmp += " " * (inbtw_len - len(str(e.value))) + str(e.value)
 
             tmp += ' ' * prefix_suffix_len + '\n'
             output += tmp
 
             inbtw_len = prefix_suffix_len
-            if i != self.depth:
+            if i != self.depth:  # skip trees for the last level which are all leaves
+                # 3 line string the tree's
                 for k, e in enumerate(level_elements):
                     if k == 0:
                         if e.left and e.right:
-                            tmp = textwrap.indent(split_tree_lr(inbtw_len), " "*(prefix_suffix_len - inbtw_len//2))
+                            tmp = textwrap.indent(split_tree_lr(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
                         elif e.left and e.right is None:
-                            tmp = textwrap.indent(split_tree_l(inbtw_len), " "*(prefix_suffix_len - inbtw_len//2))
+                            tmp = textwrap.indent(split_tree_l(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
                         elif e.left is None and e.right:
-                            tmp = textwrap.indent(split_tree_r(inbtw_len), " "*(prefix_suffix_len - inbtw_len//2))
+                            tmp = textwrap.indent(split_tree_r(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
                     else:
                         if e.left and e.right:
-                            tmp = join_ml(tmp, textwrap.indent(split_tree_lr(inbtw_len), " "*(inbtw_len)))
+                            tmp = join_ml(tmp, textwrap.indent(split_tree_lr(inbtw_len), " " * inbtw_len))
                         elif e.left and e.right is None:
-                            tmp = join_ml(tmp, textwrap.indent(split_tree_l(inbtw_len), " "*(inbtw_len)))
+                            tmp = join_ml(tmp, textwrap.indent(split_tree_l(inbtw_len), " " * inbtw_len))
                         elif e.left is None and e.right:
-                            tmp = join_ml(tmp, textwrap.indent(split_tree_r(inbtw_len), " " * (inbtw_len)))
-                tmp = join_ml(tmp, " "*prefix_suffix_len+"\n"+" "*prefix_suffix_len+"\n"+" "*prefix_suffix_len+"\n")
+                            tmp = join_ml(tmp, textwrap.indent(split_tree_r(inbtw_len), " " * inbtw_len))
+                tmp = join_ml(tmp,
+                              " " * prefix_suffix_len + "\n" + " " * prefix_suffix_len + "\n" + " " * prefix_suffix_len + "\n")
                 output += tmp
         print(output)
 
