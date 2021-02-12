@@ -1,5 +1,5 @@
 from typing import TypeVar, Generic
-from lib import heapify
+import heapify
 
 Node = TypeVar('Node')
 
@@ -248,7 +248,7 @@ class BT:
             return joined
 
         WIDTH = 7
-        MARGIN = 2
+        MARGIN = 4
 
         elements = [[self.root]]
         depth = self.depth
@@ -256,16 +256,15 @@ class BT:
         while depth > 0:
             tmp = []
             for e in elements[-1]:
-                if e.left and e.right:
+                if e is None:
+                    tmp += [None, None]
+                else:
                     tmp += [e.left, e.right]
-                elif e.left is None and e.right:
-                    tmp += [e.right]
-                elif e.right is None and e.left:
-                    tmp += [e.left]
             elements.append(tmp)
             depth -= 1
 
         output = ''
+        inbtw_len = 0  # not used for root level
         for i, level_elements in enumerate(elements):
             prefix_suffix_len = max(int(2 ** (self.depth - i - 1)) * WIDTH, MARGIN)
 
@@ -273,9 +272,12 @@ class BT:
             tmp = ' ' * prefix_suffix_len
             for j, e in enumerate(level_elements):
                 if j == 0:
-                    tmp += str(e.value)
+                    tmp += str(e.value) if e is not None else " "
                 else:
-                    tmp += " " * (inbtw_len - len(str(e.value))) + str(e.value)
+                    if e is not None:
+                        tmp += " " * (inbtw_len - len(str(e.value))) + str(e.value)
+                    else:
+                        tmp += " " * (inbtw_len)
 
             tmp += ' ' * prefix_suffix_len + '\n'
             output += tmp
@@ -285,19 +287,29 @@ class BT:
                 # 3 line string the tree's
                 for k, e in enumerate(level_elements):
                     if k == 0:
-                        if e.left and e.right:
-                            tmp = textwrap.indent(split_tree_lr(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
-                        elif e.left and e.right is None:
-                            tmp = textwrap.indent(split_tree_l(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
-                        elif e.left is None and e.right:
-                            tmp = textwrap.indent(split_tree_r(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
+                        if e is not None:
+                            if e.left and e.right:
+                                tmp = textwrap.indent(split_tree_lr(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
+                            elif e.left and e.right is None:
+                                tmp = textwrap.indent(split_tree_l(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
+                            elif e.left is None and e.right:
+                                tmp = textwrap.indent(split_tree_r(inbtw_len), " " * (prefix_suffix_len - inbtw_len // 2))
+                        else:
+                            tmp = " " * (inbtw_len//2 + prefix_suffix_len) + "\n" + " " * (inbtw_len//2 + prefix_suffix_len) \
+                                  + "\n" + " " * (inbtw_len//2 + prefix_suffix_len) + "\n"
                     else:
-                        if e.left and e.right:
-                            tmp = join_ml(tmp, textwrap.indent(split_tree_lr(inbtw_len), " " * inbtw_len))
-                        elif e.left and e.right is None:
-                            tmp = join_ml(tmp, textwrap.indent(split_tree_l(inbtw_len), " " * inbtw_len))
-                        elif e.left is None and e.right:
-                            tmp = join_ml(tmp, textwrap.indent(split_tree_r(inbtw_len), " " * inbtw_len))
+                        if e is not None:
+                            if e.left and e.right:
+                                tmp = join_ml(tmp, textwrap.indent(split_tree_lr(inbtw_len), " " * inbtw_len))
+                            elif e.left and e.right is None:
+                                tmp = join_ml(tmp, textwrap.indent(split_tree_l(inbtw_len), " " * inbtw_len))
+                            elif e.left is None and e.right:
+                                tmp = join_ml(tmp, textwrap.indent(split_tree_r(inbtw_len), " " * inbtw_len))
+                            else:
+                                tmp = join_ml(tmp, " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n")
+                        else:
+                            tmp = join_ml(tmp,
+                                          " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n" + " " * 2 * inbtw_len + "\n")
                 tmp = join_ml(tmp,
                               " " * prefix_suffix_len + "\n" + " " * prefix_suffix_len + "\n" + " " * prefix_suffix_len + "\n")
                 output += tmp
@@ -305,5 +317,6 @@ class BT:
 
 
 if __name__ == '__main__':
-    x = BT(list(range(4)))
+    # x = BT(list(range(15)))
+    x = BT(Node(1, Node(2, None, Node(4)), Node(3, Node(5, Node(6), Node(7)))))
     x.ASCII()
