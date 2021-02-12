@@ -1,5 +1,5 @@
 from typing import TypeVar, Generic
-import heapify
+from lib import heapify
 
 Node = TypeVar('Node')
 
