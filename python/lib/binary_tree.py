@@ -96,12 +96,15 @@ class BT:
         values = [self.root.value]
         n, l = 0, 0
         while len(elements) > 0:
+            tmp = []
             for e in elements:
-                if e.left or e.right:
-                    n += 1
-                else:
-                    l += 1
-            elements = [e.left for e in elements if e.left is not None] + [e.right for e in elements if e.right is not None]
+                if e.left and e.right:
+                    tmp += [e.left , e.right]
+                elif e.left is None and e.right:
+                    tmp += [e.right]
+                elif e.right is None and e.left:
+                    tmp += [e.left]
+            elements = tmp
             values += [x.value for x in elements]
         return values
 
@@ -113,13 +116,11 @@ class BT:
         :return: maximum depth/height of the tree
         """
         def recur(n):
-            if n.left is None:
-                return 1
-            if n.right is None:
+            if n is None:
                 return 1
             return max(1 + recur(n.left), 1 + recur(n.right))
 
-        return max(1 + recur(root.left), 1 + recur(root.right)) - 1
+        return max(1 + recur(root.left), 1 + recur(root.right)) - 2
 
     @staticmethod
     def __countnl__(root, depth):
@@ -205,3 +206,89 @@ class BT:
         :return: None
         """
         self.root = heapify.min_heapify(self.elements)
+
+    def ASCII(self):
+        """
+        This method returns a ASCII representation of the binary tree
+        :return: None
+        """
+        import textwrap
+
+        def split_tree_lr(width):
+            if width % 2:
+                return "_" * (width // 2) + "|" + "_" * (width // 2) + "\n" + "|" + " " * (width - 2) + "|"
+            else:
+                return "_" * (width // 2) + "|" + "_" * (width // 2 - 1) + "\n" + "|" + " " * (width - 2) + "|"
+        def split_tree_r(width):
+            if width % 2:
+                return " " * (width // 2) + "|" + "_" * (width // 2) + "\n" + " " * (width - 1) + "|"
+            else:
+                return " " * (width // 2) + "|" + "_" * (width // 2 - 1) + "\n" + " " * (width - 1) + "|"
+        def split_tree_l(width):
+            if width % 2:
+                return "_" * (width // 2) + "|" + " " * (width // 2) + "\n" + "|" + " " * (width - 1)
+            else:
+                return "_" * (width // 2) + "|" + " " * (width // 2 - 1) + "\n" + "|" + " " * (width - 1)
+
+        def join_ml(s1, s2):
+            joined = ''
+            for l, r in zip(s1.splitlines(), s2.splitlines()):
+                joined += l + r + "\n"
+            return joined
+
+        WIDTH = 7
+        MARGIN = 2
+
+        elements = [[self.root]]
+        depth = self.depth
+        while depth > 0:
+            tmp = []
+            for e in elements[-1]:
+                if e.left and e.right:
+                    tmp += [e.left, e.right]
+                elif e.left is None and e.right:
+                    tmp += [e.right]
+                elif e.right is None and e.left:
+                    tmp += [e.left]
+            elements.append(tmp)
+            depth -= 1
+
+        output = ''
+        for i, level_elements in enumerate(elements):
+            prefix_suffix_len = max(int(2 ** (self.depth - i  - 1)) * WIDTH, MARGIN)
+
+            tmp = ' '* prefix_suffix_len
+            for j, e in enumerate(level_elements):
+                if j == 0:
+                    tmp += str(e.value)
+                else:
+                    tmp += " "*(inbtw_len - len(str(e.value))) + str(e.value)
+
+            tmp += ' ' * prefix_suffix_len + '\n'
+            output += tmp
+
+            inbtw_len = prefix_suffix_len
+            if i != self.depth:
+                for k, e in enumerate(level_elements):
+                    if k == 0:
+                        if e.left and e.right:
+                            tmp = textwrap.indent(split_tree_lr(inbtw_len), " "*(prefix_suffix_len - inbtw_len//2))
+                        elif e.left and e.right is None:
+                            tmp = textwrap.indent(split_tree_l(inbtw_len), " "*(prefix_suffix_len - inbtw_len//2))
+                        elif e.left is None and e.right:
+                            tmp = textwrap.indent(split_tree_r(inbtw_len), " "*(prefix_suffix_len - inbtw_len//2))
+                    else:
+                        if e.left and e.right:
+                            tmp = join_ml(tmp, textwrap.indent(split_tree_lr(inbtw_len), " "*(inbtw_len)))
+                        elif e.left and e.right is None:
+                            tmp = join_ml(tmp, textwrap.indent(split_tree_l(inbtw_len), " "*(inbtw_len)))
+                        elif e.left is None and e.right:
+                            tmp = join_ml(tmp, textwrap.indent(split_tree_r(inbtw_len), " " * (inbtw_len)))
+                tmp = join_ml(tmp, " "*prefix_suffix_len+"\n"+" "*prefix_suffix_len+"\n"+" "*prefix_suffix_len+"\n")
+                output += tmp
+        print(output)
+
+
+if __name__ == '__main__':
+    x = BT(list(range(4)))
+    x.ASCII()
