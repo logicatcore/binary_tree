@@ -314,9 +314,3 @@ class BT:
                               " " * prefix_suffix_len + "\n" + " " * prefix_suffix_len + "\n" + " " * prefix_suffix_len + "\n")
                 output += tmp
         print(output)
-
-
-if __name__ == '__main__':
-    # x = BT(list(range(15)))
-    x = BT(Node(1, Node(2, None, Node(4)), Node(3, Node(5, Node(6), Node(7)))))
-    x.ASCII()
