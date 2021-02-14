@@ -1,5 +1,6 @@
 from typing import TypeVar, Generic
 from lib import heapify
+from lib import heap_sort
 
 Node = TypeVar('Node')
 
@@ -319,3 +320,15 @@ class BT:
                               " " * prefix_suffix_len + "\n" + " " * prefix_suffix_len + "\n" + " " * prefix_suffix_len + "\n")
                 output += tmp
         print(output)
+
+    def heap_sort(self, order='ascending'):
+        """
+        Performs a heapfort on the elements of the binary tree in either ascending or descending order
+        :param order: decides the sorting order, acceptable values are 'ascending' or 'descending'
+        :return None
+        """
+        if order == 'ascending':
+            sorted = heap_sort.heap_sort_asc(self.elements)
+        elif order == 'descending':
+            sorted = heap_sort.heap_sort_desc(self.elements)
+        self.root = sorted
