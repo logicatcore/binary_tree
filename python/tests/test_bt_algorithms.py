@@ -42,10 +42,8 @@ class TestWraps:
 
         def test_max_heap_sort_wrap(self):
             x = BT([1,14,4,3,16,8,7,2,10,9])
-            x.heap_sort()
-            assert [1, 2, 3, 4, 7, 8, 9, 10, 14, 16] == x.elements, "The order of elements comprising the tree after ascending heap sort do not match"
+            assert [1, 2, 3, 4, 7, 8, 9, 10, 14, 16] == x.heap_sort(), "The order of elements comprising the tree after ascending heap sort do not match"
 
         def test_min_heap_sort_wrap(self):
             x = BT([1,14,4,3,16,8,7,2,10,9])
-            x.heap_sort(order='descending')
-            assert [16, 14, 10, 9, 8, 7, 4, 3, 2, 1] == x.elements, "The order of elements comprising the tree after descending heap sort do not match"
+            assert [16, 14, 10, 9, 8, 7, 4, 3, 2, 1] == x.heap_sort(order='descending'), "The order of elements comprising the tree after descending heap sort do not match"

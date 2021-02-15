@@ -325,10 +325,10 @@ class BT:
         """
         Performs a heapfort on the elements of the binary tree in either ascending or descending order
         :param order: decides the sorting order, acceptable values are 'ascending' or 'descending'
-        :return None
+        :return Sorted list of tree elements
         """
         if order == 'ascending':
             sorted = heap_sort.heap_sort_asc(self.elements)
         elif order == 'descending':
             sorted = heap_sort.heap_sort_desc(self.elements)
-        self.root = sorted
+        return sorted
