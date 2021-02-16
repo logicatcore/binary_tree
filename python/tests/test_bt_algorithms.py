@@ -1,7 +1,7 @@
 import pytest
 from lib import heapify
-from lib.binary_tree import Node, BT
 from lib import heap_sort
+from lib.binary_tree import Node, BT
 
 class TestHeapify:
     def test_max_heapify(self):
@@ -32,18 +32,18 @@ class TestWraps:
         random_heap.min_heapify()
         assert [1, 2, 4, 3, 6, 5, 8, 10, 7, 9] == random_heap.elements, "The order of elements after min-heapify operation is not as expected"
 
-    class TestHeapSorts:
+class TestHeapSorts:
 
-        def test_max_heap_sort(self):
-            assert [1, 2, 3, 4, 7, 8, 9, 10, 14, 16] == heap_sort.heap_sort_asc([1,14,4,3,16,8,7,2,10,9]), "The order of elements after performing ascending heap sort do not match"
+    def test_max_heap_sort(self):
+        assert [1, 2, 3, 4, 7, 8, 9, 10, 14, 16] == heap_sort.heap_sort_asc([1,14,4,3,16,8,7,2,10,9]), "The order of elements after performing ascending heap sort do not match"
 
-        def test_min_heap_sort(self):
-            assert [16, 14, 10, 9, 8, 7, 4, 3, 2, 1] == heap_sort.heap_sort_desc([1,14,4,3,16,8,7,2,10,9]), "The order of elements after performing descending heap sort do not match"
+    def test_min_heap_sort(self):
+        assert [16, 14, 10, 9, 8, 7, 4, 3, 2, 1] == heap_sort.heap_sort_desc([1,14,4,3,16,8,7,2,10,9]), "The order of elements after performing descending heap sort do not match"
 
-        def test_max_heap_sort_wrap(self):
-            x = BT([1,14,4,3,16,8,7,2,10,9])
-            assert [1, 2, 3, 4, 7, 8, 9, 10, 14, 16] == x.heap_sort(), "The order of elements comprising the tree after ascending heap sort do not match"
+    def test_max_heap_sort_wrap(self):
+        x = BT([1,14,4,3,16,8,7,2,10,9])
+        assert [1, 2, 3, 4, 7, 8, 9, 10, 14, 16] == x.heap_sort(), "The order of elements comprising the tree after ascending heap sort do not match"
 
-        def test_min_heap_sort_wrap(self):
-            x = BT([1,14,4,3,16,8,7,2,10,9])
-            assert [16, 14, 10, 9, 8, 7, 4, 3, 2, 1] == x.heap_sort(order='descending'), "The order of elements comprising the tree after descending heap sort do not match"
+    def test_min_heap_sort_wrap(self):
+        x = BT([1,14,4,3,16,8,7,2,10,9])
+        assert [16, 14, 10, 9, 8, 7, 4, 3, 2, 1] == x.heap_sort(order='descending'), "The order of elements comprising the tree after descending heap sort do not match"
