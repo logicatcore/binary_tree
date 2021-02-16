@@ -1,5 +1,5 @@
 import pytest
-from lib.priority_queue import MaxPQueue, MinPQueue
+from binary_tree.priority_queue import MaxPQueue, MinPQueue
 
 class TestMaxPQueue:
     def test_basic_functionality(self):

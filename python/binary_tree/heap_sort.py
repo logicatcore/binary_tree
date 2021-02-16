@@ -1,4 +1,4 @@
-from lib import heapify
+from binary_tree import heapify
 
 def heap_sort_asc(A):
     """

@@ -1,5 +1,5 @@
-from lib.binary_tree import BT, Node
-from lib import heapify
+from binary_tree.binary_tree import BT, Node
+from binary_tree import heapify
 import math
 
 class MaxPQueue(BT):

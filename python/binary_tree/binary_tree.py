@@ -1,6 +1,6 @@
 from typing import TypeVar, Generic
-from lib import heapify
-from lib import heap_sort
+from binary_tree import heapify
+from binary_tree import heap_sort
 
 Node = TypeVar('Node')
 

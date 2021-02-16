@@ -1,5 +1,5 @@
 import pytest
-from lib.binary_tree import BT, Node
+from binary_tree.binary_tree import BT, Node
 
 class TestBinaryTreeAttributes:
 

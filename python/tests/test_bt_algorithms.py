@@ -1,7 +1,7 @@
 import pytest
-from lib import heapify
-from lib import heap_sort
-from lib.binary_tree import Node, BT
+from binary_tree import heapify
+from binary_tree import heap_sort
+from binary_tree.binary_tree import Node, BT
 
 class TestHeapify:
     def test_max_heapify(self):
