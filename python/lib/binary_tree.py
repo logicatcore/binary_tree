@@ -332,3 +332,20 @@ class BT:
         elif order == 'descending':
             sorted = heap_sort.heap_sort_desc(self.elements)
         return sorted
+
+    def properties(self):
+        """
+        Prints a summary of the tree properties and an ASCII representation of the tree
+        :return: None
+        """
+        print(f"Total number of elements in the tree are: {self.nodes + self.leafs}")
+        print(f"Total number of nodes are: {self.nodes}")
+        print(f"Total number of leafs are: {self.leafs}")
+        print(f"The depth of the tree is: {self.depth}")
+
+        sorted = heap_sort.heap_sort_asc(self.elements)
+        print(f"The maximum value in the tree is: {sorted[-1]}")
+        print(f"The minimum value in the tree is: {sorted[0]}")
+
+        print("")
+        self.ASCII()
