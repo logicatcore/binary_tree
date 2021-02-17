@@ -10,6 +10,10 @@ This repository is for creating a comprhensive binary tree data structure and va
 
 # Python Binary Tree demo
 
+Install the package using this to follow along the rest of the code
+```shell
+pip install binary-tree-logicatcore
+```
 
 ```python
 from binary_tree.binary_tree import BT, Node
