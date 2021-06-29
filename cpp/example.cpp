@@ -2,23 +2,26 @@
 #include "include/binary_tree.h"
 #include <iostream>
 #include <vector>
+void newLine(){
+    std::cout << "\n" << std::endl;
+}
 
 int main() {
     Node<int> n1(10342);
-    std::cout << n1;
+    std::cout << n1 << std::endl;
 
     Node<int> n2(10342);
     Node<int> left(22);
     n2.setLeftNode(&left);
-    std::cout << n2;
+    std::cout << n2 << std::endl;
 
     Node<int> n3(10342);
     Node<int> right(324);
     n3.setRightNode(&right);
-    std::cout << n3;
+    std::cout << n3 << std::endl;
 
     Node<int> n4(10342, 22, 323);
-    std::cout << n4;
+    std::cout << n4 << std::endl;
 
     std::vector<int> values{1,2,3};
     BinaryTree<int> tree1(values);
