@@ -5,7 +5,7 @@ This repository is for creating a comprhensive binary tree data structure and va
 
 # Note
 * Develop python code with python version 3.8 and above only
-* Develop c++ code with c++ version 17 (**Still in progress**)
+* Develop c++ code with c++ version 11 (**Still in progress**)
 * Make sure to work on a branch branched from devel
 
 # Python Binary Tree demo
